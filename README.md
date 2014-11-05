@@ -44,7 +44,12 @@ $ gg
 
 To clone a new repo and automatically install dependencies, run:
 ```sh
-$ gg $SOME_GIT_REPO 
+$ gg $SOME_GIT_REPO
+```
+
+To have your dev environment automagically activated and set up, run:
+```sh
+$ gg $SOME_PROJECT
 ```
 
 TODO
