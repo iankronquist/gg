@@ -1,0 +1,74 @@
+# vim: ft=sh
+
+if [[ -z $PROJECTS_DIR ]]; then 
+	PROJECTS_DIR=$HOME/gg
+	mkdir -p PROJECTS_DIR
+fi
+
+if [[ -z $VENVS_DIR ]]; then 
+	VENVS_DIR=$HOME/venv
+	mkdir -p VENVS_DIR
+fi
+
+gg2() {
+
+	# Deactivate current virtualenv, if any
+	deactivate 2> /dev/null
+	if [[ -nz $GG_OLD_PATH ]]; then 
+		PATH=GG_OLD_PATH
+	fi
+
+	# If there is no argument go to $PROJECTS_DIR, show some stuff, and leave
+	if [[ $1 == "" ]]; then 
+		cd $PROJECTS_DIR
+		ls
+		return
+	# else if the argument is a git url clone it and go to it
+	elif [[ $1 =~ 'https' || $1 =~ 'git@' ]]; then
+		cd $PROJECTS_DIR
+		git clone "$1" && cd `ls -t . | head -1`
+	# else if a directory in PROJECTS_DIR exists, go to it
+	elif [[ -d $PROJECTS_DIR/$1 ]]; then 
+		cd $PROJECTS_DIR/$1
+	else
+		echo "No project named" $1 "was found."
+		return
+	fi
+
+	# If there is a requirements.txt
+	if [[ -e requirements.txt || -e requirements/requirements.txt ]]; then
+		if [[ -n __gg_source_venv ]]; then	
+			if [[ -e requirements.txt ]]; then
+				pip install -r requirements.txt
+			else 
+				pip install -r requirements/requirements.txt
+			fi
+		fi
+	elif [[ -e setup.py ]]; then
+		if [[ -n __gg_source_venv ]]; then	
+			python setup.py install
+		fi
+	fi
+
+	# If there is a package.json
+	if [[ -e package.json ]]; then
+		if [[ ! -e node_modules ]]; then
+			npm install
+		fi
+		export GG_OLD_PATH=PATH
+		export PATH="$(pwd)/node_modules/.bin/:$PATH"
+	fi
+}
+
+__gg_source_venv() {
+	PROJ_NAME=${PWD##*/}
+	# if a virtualenv exists source it, else create, install, and source it
+	if [ -d "$HOME/venv/$PROJ_NAME" ]; then
+		source $VENVS_DIR/$PROJ_NAME/bin/activate
+		return 1;
+	else 
+		virtualenv $VENVS_DIR
+		source $VENVS_DIR/$PROJ_NAME/bin/activate
+		return 0;
+	fi
+}
