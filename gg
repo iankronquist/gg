@@ -2,15 +2,15 @@
 
 if [[ -z $PROJECTS_DIR ]]; then 
 	PROJECTS_DIR=$HOME/gg
-	mkdir -p PROJECTS_DIR
+	mkdir -p $PROJECTS_DIR
 fi
 
 if [[ -z $VENVS_DIR ]]; then 
 	VENVS_DIR=$HOME/venv
-	mkdir -p VENVS_DIR
+	mkdir -p $VENVS_DIR
 fi
 
-gg2() {
+gg() {
 
 	# Deactivate current virtualenv, if any
 	deactivate 2> /dev/null
@@ -37,7 +37,8 @@ gg2() {
 
 	# If there is a requirements.txt
 	if [[ -e requirements.txt || -e requirements/requirements.txt ]]; then
-		if [[ -n __gg_source_venv ]]; then	
+		__gg_source_venv
+		if [[ $? == '0' ]]; then
 			if [[ -e requirements.txt ]]; then
 				pip install -r requirements.txt
 			else 
@@ -45,7 +46,8 @@ gg2() {
 			fi
 		fi
 	elif [[ -e setup.py ]]; then
-		if [[ -n __gg_source_venv ]]; then	
+		__gg_source_venv
+		if [[ $? == '0' ]]; then
 			python setup.py install
 		fi
 	fi
@@ -63,11 +65,11 @@ gg2() {
 __gg_source_venv() {
 	PROJ_NAME=${PWD##*/}
 	# if a virtualenv exists source it, else create, install, and source it
-	if [ -d "$HOME/venv/$PROJ_NAME" ]; then
+	if [ -d "$VENVS_DIR/$PROJ_NAME" ]; then
 		source $VENVS_DIR/$PROJ_NAME/bin/activate
 		return 1;
 	else 
-		virtualenv $VENVS_DIR
+		virtualenv $VENVS_DIR/$PROJ_NAME
 		source $VENVS_DIR/$PROJ_NAME/bin/activate
 		return 0;
 	fi
