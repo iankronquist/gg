@@ -15,7 +15,7 @@ gg() {
 	# Deactivate current virtualenv, if any
 	deactivate 2> /dev/null
 	if [[ -nz $GG_OLD_PATH ]]; then 
-		PATH=GG_OLD_PATH
+		PATH=$GG_OLD_PATH
 	fi
 
 	# If there is no argument go to $PROJECTS_DIR, show some stuff, and leave
@@ -61,7 +61,7 @@ gg() {
 		if [[ ! -e node_modules ]]; then
 			npm install
 		fi
-		export GG_OLD_PATH=PATH
+		export GG_OLD_PATH=$PATH
 		export PATH="$(pwd)/node_modules/.bin/:$PATH"
 	fi
 }
