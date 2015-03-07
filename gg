@@ -78,3 +78,9 @@ __gg_source_venv() {
 		return 0;
 	fi
 }
+
+__gg_autocomplete () {
+	tmp=($(compgen -W "$(ls "$PROJECTS_DIR")" -- "${COMP_WORDS[$COMP_CWORD]}" ))
+	COMPREPLY=( "${tmp[@]// /\ }" )
+}
+complete -F __gg_autocomplete gg
