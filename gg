@@ -1,4 +1,4 @@
-# vim: ft=sh
+#!/bin/bash
 
 if [[ -z $PROJECTS_DIR ]]; then 
 	PROJECTS_DIR=$HOME/gg
