@@ -14,7 +14,7 @@ gg() {
 
 	# Deactivate current virtualenv, if any
 	deactivate 2> /dev/null
-	if [[ -nz $GG_OLD_PATH ]]; then 
+	if [[ ! -z $GG_OLD_PATH ]]; then 
 		PATH=$GG_OLD_PATH
 	fi
 
