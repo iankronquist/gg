@@ -83,4 +83,8 @@ __gg_autocomplete () {
 	tmp=($(compgen -W "$(ls "$PROJECTS_DIR")" -- "${COMP_WORDS[$COMP_CWORD]}" ))
 	COMPREPLY=( "${tmp[@]// /\ }" )
 }
-complete -F __gg_autocomplete gg
+
+
+if [[ -z $GG_NO_AUTOCOMPLETE ]]; then
+	complete -F __gg_autocomplete gg
+fi
