@@ -85,6 +85,6 @@ __gg_autocomplete () {
 }
 
 
-if [[ -z $GG_NO_AUTOCOMPLETE ]]; then
+if [[ $GG_NO_AUTOCOMPLETE ]]; then
 	complete -F __gg_autocomplete gg
 fi
