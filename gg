@@ -84,7 +84,6 @@ __gg_autocomplete () {
 	COMPREPLY=( "${tmp[@]// /\ }" )
 }
 
-
-if [[ $GG_NO_AUTOCOMPLETE ]]; then
+if [[ -z $GG_NO_AUTOCOMPLETE ]]; then
 	complete -F __gg_autocomplete gg
 fi
