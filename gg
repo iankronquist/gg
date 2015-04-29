@@ -10,6 +10,7 @@ if [[ -z $VENVS_DIR ]]; then
 	mkdir -p $VENVS_DIR
 fi
 
+
 gg() {
 
 	# Deactivate current virtualenv, if any
@@ -17,6 +18,11 @@ gg() {
 	if [[ ! -z $GG_OLD_PATH ]]; then 
 		PATH=$GG_OLD_PATH
 	fi
+
+	if [[ ! -z $OLD_GOPATH ]]; then 
+		GOPATH=$OLD_GOPATH
+	fi
+
 
 	# If there is no argument go to $PROJECTS_DIR, show some stuff, and leave
 	if [[ $1 == "" ]]; then 
@@ -34,6 +40,12 @@ gg() {
 		echo "No project named" $1 "was found."
 		return
 	fi
+
+	# If we successfully navigated to the directory, add it to our GOPATH, just
+	# in case it's a Go repo.
+	# FIXME: we should only do this if it's a go repo.
+	OLD_GOPATH=$GOPATH
+	GOPATH=$GOPATH:`pwd`
 
 	# If there is a requirements.txt
 	if [[ -e requirements.txt || -d requirements ]]; then
