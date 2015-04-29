@@ -17,9 +17,12 @@ $ cd $SOME_PROJECT
 $ npm install
 ```
 
+Not a fan of keeping your go projects in some arcane directory like
+`~/go/src/github.com/$ME/$SOME_PROJECT`?
+
 Wouldn't it be great if you could just tab complete a project name and be
 whisked there with your environment all set up for you?
-What if this command could sniff out python versions, requirements files vs
+What if this command could sniff out requirements files vs
 setup.py files, node dependencies, and more?
 
 
@@ -54,10 +57,10 @@ $ gg $SOME_PROJECT
 
 TODO
 ----
-- Add tab completion for directories in `$PROJECTS_DIR`.
+- Tab completion is broken on some Linux systems.
 - Sniff the appropriate python version and install it accordingly.
 	* maybe look at tox.ini or setup.py files
-- Look at adding support for cabal, ruby gems, go get, cargo, and possibly
+- Look at adding support for cabal, ruby gems, cargo, and possibly
   others.
 
 Pull requests welcome!
