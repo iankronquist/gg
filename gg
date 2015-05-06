@@ -32,7 +32,7 @@ gg() {
 	# else if the argument is a git url clone it and go to it
 	elif [[ $1 =~ 'http' || $1 =~ 'git@' || $1 =~ 'git://' ]]; then
 		cd $PROJECTS_DIR
-		git clone "$1" && cd `ls -t . | head -1`
+		git clone "$1" "$2" && cd `ls -t . | head -1`
 	# else if a directory in PROJECTS_DIR exists, go to it
 	elif [[ -d $PROJECTS_DIR/$1 ]]; then 
 		cd $PROJECTS_DIR/$1
