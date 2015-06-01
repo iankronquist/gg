@@ -92,7 +92,7 @@ __gg_source_venv() {
 }
 
 __gg_autocomplete () {
-	tmp=($(compgen -W "$(ls "$PROJECTS_DIR")" -- "${COMP_WORDS[$COMP_CWORD]}" ))
+	tmp=($(compgen -W "$(ls --color=never "$PROJECTS_DIR")" -- "${COMP_WORDS[$COMP_CWORD]}" ))
 	COMPREPLY=( "${tmp[@]// /\ }" )
 }
 
