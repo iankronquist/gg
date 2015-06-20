@@ -109,7 +109,7 @@ __gg_source_venv() {
 }
 
 __gg_autocomplete () {
-	tmp=($(compgen -W "$(find "$PROJECTS_DIR"/* -type d -maxdepth 0 | awk -F/ '{ print $NF }')" -- "${COMP_WORDS[$COMP_CWORD]}" ))
+	tmp=($(compgen -W "$(find "$PROJECTS_DIR"/* -maxdepth 0 | awk -F/ '{ print $NF }')" -- "${COMP_WORDS[$COMP_CWORD]}" ))
 	COMPREPLY=( "${tmp[@]// /\ }" )
 }
 
