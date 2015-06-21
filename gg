@@ -25,6 +25,15 @@ gg() {
 		GOPATH=$OLD_GOPATH
 	fi
 
+	if [[ $1 == '.' ]]; then
+		# this will never recurse infinitely because you can't have '.'
+		# be your pwd.
+		PROJ_NAME=${PWD##*/}
+		echo $PROJ_NAME
+		gg $PROJ_NAME
+		return
+	fi
+
 
 	# If there is no argument go to $PROJECTS_DIR, show some stuff, and leave
 	if [[ $1 == "" ]]; then 
