@@ -55,7 +55,7 @@ gg() {
 			cd $GIT_CLONE_DIR
 		else
 			echo clone_output
-			exit $?
+			return $?
 		fi
 	# else if a directory in PROJECTS_DIR exists, go to it
 	elif [[ -d $PROJECTS_DIR/$1 ]]; then 
