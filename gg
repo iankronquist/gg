@@ -85,6 +85,10 @@ gg() {
 				done
 			fi
 		fi
+	elif [[ -e Gemfile ]]; then
+		if [[ ! -e $VENVS_DIR/$PROJ_NAME ]]; then
+			bundle install --path $VENVS_DIR/$PROJ_NAME
+		fi
 	elif [[ -e setup.py ]]; then
 		__gg_source_venv
 		if [[ $? == '0' ]]; then
